@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'robot'
+
+robot = Robot.new
+
+if ARGV.length == 1
+
+  File.open(ARGV[0]).each do |command|
+    result = robot.execute(command.chomp)
+    puts result if result.is_a? String
+  end
+  exit
+
+else
+
+  puts "==================================================================="
+  puts "Welcome to the toy robot simulator"
+  puts "Get started by placing the robot on the table with: PLACE 0,0,NORTH"
+  puts "You can then use the following commands: MOVE, LEFT, RIGHT, REPORT"
+  puts "Have fun!!"
+  puts "==================================================================="
+
+  while command = gets.chomp
+    result = robot.execute(command)
+    puts result if result.is_a? String
+    exit if command =~ /^(exit|quit)$/
+  end
+
+end
